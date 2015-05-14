@@ -9,6 +9,10 @@ class TestApp(unittest.TestCase):
         rounded_secs = round(log.duration / 1000)
         self.assertEqual(rounded_secs, 33)
 
+    def test_worker_amount(self):
+        log = LogParser('app-20150427122457-0000')
+        self.assertEqual(len(log.workers), 2)
+
 
 if __name__ == '__main__':
     unittest.main()

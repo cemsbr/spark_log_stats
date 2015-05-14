@@ -5,6 +5,7 @@ class LogParser:
     def __init__(self, filename):
         self.start = -1
         self.end = -1
+        self.workers = set()
 
         self._parse_file(filename)
 
@@ -20,6 +21,8 @@ class LogParser:
             self.start = json["Timestamp"]
         elif event == "SparkListenerApplicationEnd":
             self.end = json["Timestamp"]
+        elif event == "SparkListenerExecutorAdded":
+            self.workers.add(json["Executor Info"]["Host"])
 
     @property
     def duration(self):
