@@ -1,1 +1,1 @@
-from .logparser import LogParser
+from .logparser import LogParser, ParserException
