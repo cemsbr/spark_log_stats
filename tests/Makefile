@@ -23,7 +23,7 @@ coverage: .coverage
 	@-rm -f .coverage
 	@export PYTHONPATH="$$PYTHON_PATH:.."; \
 	for test in test_*.py; do \
-		coverage run -a $$test; \
+		coverage3 run -a $$test; \
 	done
 
 coverage-html: .coverage
