@@ -3,9 +3,13 @@ from json import loads
 
 class LogParser:
     def __init__(self):
+        self._reset()
+
+    def _reset(self):
         self.app = Application()
 
     def parse_file(self, filename):
+        self._reset()
         with open(filename) as f:
             for line in f.readlines():
                 json = loads(line)

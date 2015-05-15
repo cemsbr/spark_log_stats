@@ -10,7 +10,6 @@ install:
   - pip install -qr tests/requirements.txt
 script:
   - cd tests/
-  - make tests
   - make coverage
 after_success:
     - coveralls
