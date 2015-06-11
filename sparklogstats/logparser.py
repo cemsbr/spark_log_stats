@@ -10,8 +10,8 @@ class LogParser:
 
     def parse_file(self, filename):
         self._reset()
-        with open(filename) as f:
-            for line in f.readlines():
+        with open(filename) as file:
+            for line in file.readlines():
                 json = loads(line)
                 self.parse_json(json)
 
@@ -41,6 +41,7 @@ class LogParser:
             self.app.jobs[job_id].end = json["Completion Time"]
 
 
+# pylint: disable=R0903
 class Timed:
     def __init__(self):
         self.start = self.end = -1
@@ -52,6 +53,7 @@ class Timed:
 
 class Application(Timed):
     def __init__(self):
+        super().__init__()
         self.workers = set()
         self.jobs = []
 

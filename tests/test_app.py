@@ -16,7 +16,7 @@ class TestApp(unittest.TestCase):
     def test_worker_amount(self):
         self.assertEqual(len(self.app.workers), 2)
 
-    def test_two_files_should_create_two_apps(self):
+    def test_2_files_create_2_apps(self):
         self.parser.parse_file('app-20150427122457-0000')
         app2 = self.parser.app
         self.assertIsNot(self.app, app2)

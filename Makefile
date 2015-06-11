@@ -3,22 +3,23 @@ find sparklogstats tests -name "*.py" -type f | xargs $(1)
 endef
 
 help:
-	@echo '        flake8: runs flake8 on *.py files'
-	@echo '          pep8: runs pep8'
-	@echo '   yapf_format: formats all *.py files inline'
-	@echo '           all: runs flake8 and, if successful, runs yapf_format'
-	@echo 'clean_worktree: removes all files not known by git'
+	@echo '           all: run pylama and, if successful, run yapf_format'
+	@echo '        pylama: run pylama on *.py files'
+	@echo '   yapf_format: format all *.py files inline'
+	@echo '        flake8: run flake8 on *.py files'
+	@echo '          pep8: run pep8'
+	@echo 'clean_worktree: remove all files not known by git'
 
-all: flake8 yapf_format
+all: pylama yapf_format
 
-flake8:
-	$(call run_on_sources, flake8 --exclude=__init__.py)
-
-pep8:
-	$(call run_on_sources, pep8)
+pylama:
+	pylama --ignore I0011,C0111
 
 yapf_format:
 	$(call run_on_sources, yapf -i)
+
+flake8:
+	$(call run_on_sources, flake8 --exclude=__init__.py)
 
 clean_worktree:
 	git clean -dxf
