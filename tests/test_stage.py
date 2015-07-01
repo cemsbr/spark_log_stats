@@ -18,3 +18,7 @@ class TestStage(unittest.TestCase):
         app = TestStage.parse_file()
         actual = len(app.jobs[1].stages)
         self.assertEqual(actual, 1)
+
+
+if __name__ == '__main__':
+    unittest.main()

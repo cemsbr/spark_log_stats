@@ -16,3 +16,7 @@ class TestTask(unittest.TestCase):
                 actual = len(stage.tasks)
                 expected = stage.total_tasks
                 self.assertEqual(actual, expected)
+
+
+if __name__ == '__main__':
+    unittest.main()
