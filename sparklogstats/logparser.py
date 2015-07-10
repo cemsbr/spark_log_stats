@@ -74,6 +74,7 @@ class LogParser:
 
         task = Task()
         task.id = task_id
+        task.index = task_json["Index"]
         task.start = task_json["Launch Time"]
 
         self.app.tasks.append(task)
@@ -164,11 +165,17 @@ class Metrics:
     def non_scheduler(self):
         return self.deserialization + self.executor + self.serialization
 
+    @property
+    def computation(self):
+        return self.executor - self.gc - self.blocked_io
+
 
 class Task(Timed):
+    # pylint: disable=too-many-instance-attributes
     def __init__(self):
         super().__init__()
         self.id = None
+        self.index = None
         self.host = None
         self.speculative = None
         self.locality = None
