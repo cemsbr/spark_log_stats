@@ -104,6 +104,12 @@ class LogParser:
         if "Shuffle Read Metrics" in info:
             shuffle_info = info["Shuffle Read Metrics"]
             metrics.blocked_io = shuffle_info["Fetch Wait Time"]
+            metrics.bytes_read = shuffle_info["Local Bytes Read"] + \
+                                 shuffle_info["Remote Bytes Read"]
+        elif "Input Metrics" in info:
+            input_info = info["Input Metrics"]
+            metrics.bytes_read = input_info["Bytes Read"]
+            metrics.blocked_io = 0
         else:
             metrics.blocked_io = 0
 
@@ -160,6 +166,7 @@ class Metrics:
         self.executor = None  # seems to include gc and blocked-io times
         self.blocked_io = None
         self.serialization = None
+        self.bytes_read = None
 
     @property
     def non_scheduler(self):
