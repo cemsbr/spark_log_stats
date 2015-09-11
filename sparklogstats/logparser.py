@@ -119,7 +119,23 @@ class LogParser:
 # pylint: disable=R0903,C0103
 class Timed:
     def __init__(self):
-        self.start = self.end = -1
+        self._start = self._end = -1
+
+    @property
+    def start(self):
+        return self._start
+
+    @start.setter
+    def start(self, value):
+        self._start = value
+
+    @property
+    def end(self):
+        return self._end
+
+    @end.setter
+    def end(self, value):
+        self._end = value
 
     @property
     def duration(self):
@@ -149,14 +165,17 @@ class Stage(Timed):
         self.total_tasks = None
         self.tasks = []
 
-    def tasks_duration(self):
-        start, end = self.tasks[0].start, self.tasks[0].end
-        for task in self.tasks[1:]:
-            if start > task.start:
-                start = task.start
-            if end < task.end:
-                end = task.end
-        return end - start
+    @property
+    def start(self):
+        if self._start == -1 and self.tasks:
+            self._start = min(t.start for t in self.tasks)
+        return self._start
+
+    @property
+    def end(self):
+        if self._end == -1 and self.tasks:
+            self._end = max(t.end for t in self.tasks)
+        return self._end
 
 
 class Metrics:
