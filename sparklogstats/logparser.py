@@ -22,21 +22,21 @@ class LogParser:
     def parse_json(self):
         json = self._json
         event = json["Event"]
-        if event == "SparkListenerApplicationStart":
-            self.app.start = json["Timestamp"]
-        elif event == "SparkListenerApplicationEnd":
-            self.app.end = json["Timestamp"]
-        elif event == "SparkListenerExecutorAdded":
-            self.app.workers.add(json["Executor Info"]["Host"])
+        if event == "SparkListenerTaskStart":
+            self._parse_task_start()
+        elif event == "SparkListenerTaskEnd":
+            self._parse_task_end()
         elif event == "SparkListenerJobStart":
             self._parse_job()
         elif event == "SparkListenerJobEnd":
             job_id = json["Job ID"]
             self.app.jobs[job_id].end = json["Completion Time"]
-        elif event == "SparkListenerTaskStart":
-            self._parse_task_start()
-        elif event == "SparkListenerTaskEnd":
-            self._parse_task_end()
+        elif event == "SparkListenerExecutorAdded":
+            self.app.slaves.add(json["Executor Info"]["Host"])
+        elif event == "SparkListenerApplicationStart":
+            self.app.start = json["Timestamp"]
+        elif event == "SparkListenerApplicationEnd":
+            self.app.end = json["Timestamp"]
 
     def _parse_job(self):
         if self._json["Job ID"] != len(self.app.jobs):
@@ -116,7 +116,7 @@ class LogParser:
         return metrics
 
 
-# pylint: disable=R0903,C0103
+# pylint: disable=invalid-name
 class Timed:
     def __init__(self):
         self._start = self._end = -1
@@ -145,7 +145,7 @@ class Timed:
 class Application(Timed):
     def __init__(self):
         super().__init__()
-        self.workers = set()
+        self.slaves = set()
         self.jobs = []
         self.stages = []
         self.tasks = []
