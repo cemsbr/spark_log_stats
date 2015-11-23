@@ -89,9 +89,9 @@ class LogParser:
         assert task_id == task.id
 
         task.host = info_json["Host"]
-        task.speculative = info_json["Speculative"] == "true"
+        task.speculative = info_json["Speculative"]
         task.locality = info_json["Locality"]
-        task.failed = info_json["Failed"] == "true"
+        task.failed = info_json["Failed"]
         task.end = info_json["Finish Time"]
         if not task.failed:
             task.metrics = self._parse_metrics()
