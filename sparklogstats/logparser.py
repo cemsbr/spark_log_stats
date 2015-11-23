@@ -93,7 +93,8 @@ class LogParser:
         task.locality = info_json["Locality"]
         task.failed = info_json["Failed"] == "true"
         task.end = info_json["Finish Time"]
-        task.metrics = self._parse_metrics()
+        if not task.failed:
+            task.metrics = self._parse_metrics()
 
     def _parse_metrics(self):
         info = self._json["Task Metrics"]
