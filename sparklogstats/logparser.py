@@ -13,6 +13,7 @@ class LogParser:
         self._reset()
         with open(filename) as file:
             self.parse_lines(file.readlines())
+        return self.app
 
     def parse_lines(self, lines):
         for line in lines:
@@ -35,6 +36,7 @@ class LogParser:
             self.app.slaves.add(json["Executor Info"]["Host"])
         elif event == "SparkListenerApplicationStart":
             self.app.start = json["Timestamp"]
+            self.app.name = json["App Name"]
         elif event == "SparkListenerApplicationEnd":
             self.app.end = json["Timestamp"]
 
@@ -105,7 +107,7 @@ class LogParser:
             shuffle_info = info["Shuffle Read Metrics"]
             metrics.blocked_io = shuffle_info["Fetch Wait Time"]
             metrics.bytes_read = shuffle_info["Local Bytes Read"] + \
-                                 shuffle_info["Remote Bytes Read"]
+                shuffle_info["Remote Bytes Read"]
         elif "Input Metrics" in info:
             input_info = info["Input Metrics"]
             metrics.bytes_read = input_info["Bytes Read"]
@@ -149,6 +151,7 @@ class Application(Timed):
         self.jobs = []
         self.stages = []
         self.tasks = []
+        self.name = None
 
 
 class Job(Timed):
