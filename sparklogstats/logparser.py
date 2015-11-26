@@ -51,7 +51,8 @@ class LogParser:
 
     def _parse_stages(self):
         stages = []
-        for info in self._json["Stage Infos"]:
+        for info in sorted(self._json["Stage Infos"],
+                           key=lambda x: x['Stage ID']):
             stage_id = int(info['Stage ID'])
             if stage_id != len(self.app.stages):
                 # Not sure if it can happen, but it's better to check
