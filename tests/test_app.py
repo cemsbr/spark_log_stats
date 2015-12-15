@@ -14,7 +14,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(rounded_secs, 33)
 
     def test_worker_amount(self):
-        self.assertEqual(len(self.app.workers), 2)
+        self.assertEqual(len(self.app.slaves), 2)
 
     def test_2_files_create_2_apps(self):
         self.parser.parse_file('app-20150427122457-0000')
