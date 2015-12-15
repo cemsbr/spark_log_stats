@@ -12,6 +12,7 @@ class LogParser:
     def parse_file(self, filename):
         self._reset()
         with open(filename) as file:
+            self.app.filename = filename
             self.parse_lines(file.readlines())
         return self.app
 
@@ -155,6 +156,7 @@ class Application(Timed):
         self.stages = []
         self.tasks = []
         self.name = None
+        self.filename = None
 
 
 class Job(Timed):
