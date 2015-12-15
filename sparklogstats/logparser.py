@@ -113,6 +113,7 @@ class LogParser:
         elif "Input Metrics" in info:
             input_info = info["Input Metrics"]
             metrics.bytes_read = input_info["Bytes Read"]
+            metrics.data_read_method = input_info["Data Read Method"]
             metrics.blocked_io = 0
         else:
             metrics.blocked_io = 0
@@ -191,6 +192,7 @@ class Metrics:
         self.blocked_io = None
         self.serialization = None
         self.bytes_read = None
+        self.data_read_method = None
 
     @property
     def non_scheduler(self):
