@@ -185,6 +185,10 @@ class Stage(Timed):
             self._end = max(t.end for t in self.tasks)
         return self._end
 
+    @property
+    def bytes_read(self):
+        return sum(t.metrics.bytes_read for t in self.tasks if not t.failed)
+
 
 class Metrics:
     def __init__(self):
