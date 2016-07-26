@@ -22,8 +22,7 @@ class TestJob(unittest.TestCase):
         self.assertEqual(msec, 60)
 
     def test_job_id_order_exception(self):
-        """We assume job IDs are ordered. Otherwise, an exception will be
-        thrown."""
+        """Assume job IDs are ordered. Otherwise, raise exception."""
         job1 = '{"Event": "SparkListenerJobStart", "Job ID": 1}'
         parser = LogParser()
         self.assertRaises(ParserException, parser.parse_lines, [job1])

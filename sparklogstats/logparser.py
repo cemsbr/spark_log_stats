@@ -119,6 +119,12 @@ class LogParser:
         else:
             metrics.blocked_io = 0
 
+        if "Shuffle Write Metrics" in info:
+            shuffle_info = info["Shuffle Write Metrics"]
+            metrics.bytes_written = shuffle_info["Shuffle Bytes Written"]
+        else:
+            metrics.bytes_written = 0
+
         return metrics
 
 
@@ -198,6 +204,7 @@ class Metrics:
         self.blocked_io = None
         self.serialization = None
         self.bytes_read = None
+        self.bytes_written = None
         self.data_read_method = None
 
     @property
