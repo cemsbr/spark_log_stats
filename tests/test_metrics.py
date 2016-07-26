@@ -65,6 +65,10 @@ class TestMetrics(unittest.TestCase):
         actual = task.metrics.bytes_written
         self.assertEqual(actual, 47622)
 
+    def test_stage_shuffle_bytes_written(self):
+        actual = self.app.stages[0].bytes_written
+        self.assertEqual(actual, 916974)
+
 
 if __name__ == '__main__':
     unittest.main()
