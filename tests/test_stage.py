@@ -1,24 +1,19 @@
-import unittest
-from sparklogstats import LogParser
+from tests.logfiletest import LogFileTest
 
 
-class TestStage(unittest.TestCase):
-    @staticmethod
-    def parse_file():
-        parser = LogParser()
-        parser.parse_file('app-20150427122457-0000')
-        return parser.app
-
+class TestStage(LogFileTest):
     def test_one_job_has_two_stages(self):
-        app = TestStage.parse_file()
-        actual = len(app.jobs[0].stages)
+        actual = len(self.app.jobs[0].stages)
         self.assertEqual(actual, 2)
 
     def test_one_job_has_one_stage(self):
-        app = TestStage.parse_file()
-        actual = len(app.jobs[1].stages)
+        actual = len(self.app.jobs[1].stages)
         self.assertEqual(actual, 1)
 
+    def test_shuffle_bytes_written(self):
+        stage = self.app.stages[0]
+        self.assertEqual(stage.bytes_written, 916974)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_input_records_read(self):
+        stage = self.app.stages[0]
+        self.assertEqual(stage.records_read, 284108)

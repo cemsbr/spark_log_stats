@@ -52,8 +52,8 @@ class LogParser:
 
     def _parse_stages(self):
         stages = []
-        for info in sorted(self._json["Stage Infos"],
-                           key=lambda x: x['Stage ID']):
+        for info in sorted(
+                self._json["Stage Infos"], key=lambda x: x['Stage ID']):
             stage_id = int(info['Stage ID'])
             if stage_id != len(self.app.stages):
                 # Not sure if it can happen, but it's better to check
@@ -115,6 +115,7 @@ class LogParser:
             input_info = info["Input Metrics"]
             metrics.bytes_read = input_info["Bytes Read"]
             metrics.data_read_method = input_info["Data Read Method"]
+            metrics.records_read = input_info["Records Read"]
             metrics.blocked_io = 0
         else:
             metrics.blocked_io = 0
@@ -199,6 +200,10 @@ class Stage(Timed):
     def bytes_written(self):
         return sum(t.metrics.bytes_written for t in self.tasks if not t.failed)
 
+    @property
+    def records_read(self):
+        return sum(t.metrics.records_read for t in self.tasks if not t.failed)
+
 
 class Metrics:
     def __init__(self):
@@ -210,6 +215,7 @@ class Metrics:
         self.bytes_read = None
         self.bytes_written = None
         self.data_read_method = None
+        self.records_read = None
 
     @property
     def non_scheduler(self):

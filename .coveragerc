@@ -1,16 +1,15 @@
 [run]
 branch = True
 source =
-    ../sparklogstats
+    sparklogstats
 omit =
-    *__init__.py
+    venv/
 
 [report]
 exclude_lines =
     pragma: no cover
     def __repr__
     raise NotImplementedError
-    if __name__ == .__main__.:
 
 [html]
 directory = coverage_html

@@ -1,0 +1,4 @@
+# Linters
+pylama==7.0.9
+pylama-pylint==2.2.1
+isort==4.2.5

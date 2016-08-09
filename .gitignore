@@ -4,3 +4,12 @@ __pycache__/
 
 # Editor-created files
 .*.swp
+
+# virtualenv folder
+venv/
+
+*.egg-info/
+
+# Unit test / coverage reports
+.coverage
+coverage_html/

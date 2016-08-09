@@ -6,10 +6,10 @@ branches:
 python:
   - "3.3"
   - "3.4"
+  - "3.5"
 install:
-  - pip install -qr tests/requirements.txt
+  - pip install -qr requirements-tests.txt
 script:
-  - cd tests/
   - make coverage
 after_success:
     - coveralls
