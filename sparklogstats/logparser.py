@@ -204,6 +204,10 @@ class Stage(Timed):
     def records_read(self):
         return sum(t.metrics.records_read for t in self.tasks if not t.failed)
 
+    @property
+    def successful_tasks(self):
+        return (t for t in self.tasks if not t.failed)
+
 
 class Metrics:
     def __init__(self):
