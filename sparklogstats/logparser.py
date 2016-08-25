@@ -165,6 +165,16 @@ class Application(Timed):
         self.name = None
         self.filename = None
 
+    @property
+    def bytes_read(self):
+        """Input size."""
+        return self.stages[0].bytes_read
+
+    @property
+    def records_read(self):
+        """Number of lines read from input."""
+        return self.stages[0].records_read
+
 
 class Job(Timed):
     def __init__(self):
