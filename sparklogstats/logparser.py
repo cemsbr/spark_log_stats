@@ -1,3 +1,4 @@
+import glob
 from json import loads
 
 
@@ -8,6 +9,10 @@ class LogParser:
 
     def _reset(self):
         self.app = Application()
+
+    def parse_folder(self, folder):
+        logs = sorted(glob.glob(folder + '/app-*'))
+        return (self.parse_file(log) for log in logs)
 
     def parse_file(self, filename):
         self._reset()
