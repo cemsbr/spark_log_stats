@@ -209,7 +209,8 @@ class Stage(Timed):
 
     @property
     def bytes_read(self):
-        return sum(t.metrics.bytes_read for t in self.successful_tasks)
+        return sum(t.metrics.bytes_read for t in self.successful_tasks
+                   if t.metrics.bytes_read)
 
     @property
     def bytes_written(self):
