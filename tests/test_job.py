@@ -14,7 +14,11 @@ class TestJob(LogFileTest):
         self.assertEqual(msec, 60)
 
     def test_job_id_order_exception(self):
-        """Assume job IDs are ordered. Otherwise, raise exception."""
+        """Assume job IDs are ordered in log. Otherwise, raise exception."""
         job1 = '{"Event": "SparkListenerJobStart", "Job ID": 1}'
         parser = LogParser()
         self.assertRaises(ParserException, parser.parse_lines, [job1])
+
+    def test_job_completion_time(self):
+        self.assertEqual(1430148327675, self.app.jobs[0].end)
+        self.assertEqual(1430148327785, self.app.jobs[1].end)

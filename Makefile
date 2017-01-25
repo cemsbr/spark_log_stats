@@ -20,6 +20,7 @@ lint:
 format:
 	$(call run_on_sources, yapf -i)
 
+.PHONY: tests
 tests:
 	python3 setup.py test
 
@@ -27,6 +28,7 @@ coverage: .coverage
 	coverage3 report
 
 .coverage: tests/test_*.py $(RESOURCES)
+	coverage erase
 	coverage3 run setup.py test
 
 coverage-html: .coverage
