@@ -45,6 +45,11 @@ class LogParser:
             self.app.name = json["App Name"]
         elif event == "SparkListenerApplicationEnd":
             self.app.end = json["Timestamp"]
+        elif event == "SparkListenerStageCompleted":
+            info = json['Stage Info']
+            stage = self.app.stages[int(info['Stage ID'])]
+            stage.start = info['Submission Time']
+            stage.end = info['Completion Time']
 
     def _parse_job(self):
         if self._json["Job ID"] != len(self.app.jobs):
@@ -194,18 +199,6 @@ class Stage(Timed):
         self.name = None
         self.total_tasks = None
         self.tasks = []
-
-    @property
-    def start(self):
-        if self._start == -1 and self.tasks:
-            self._start = min(t.start for t in self.tasks)
-        return self._start
-
-    @property
-    def end(self):
-        if self._end == -1 and self.tasks:
-            self._end = max(t.end for t in self.tasks)
-        return self._end
 
     @property
     def bytes_read(self):
